@@ -1,0 +1,8 @@
+{
+  "name"              : "gifting_test",
+  "script"            : "./bin/www",
+  "args"              : [3000],
+  "log_date_format"   : "YYYY-MM-DD HH:mm Z",
+  "exec_mode"         : "fork",
+  "instances"         : 1
+}

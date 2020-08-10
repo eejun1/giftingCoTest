@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <link rel='stylesheet' href="/stylesheets/style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body align="center">
+<div class="jumbotron well">
+    <h2 class="text-center">조회 결과</h2>
+    <% if (body.trackingDetails){ %>
+        <h4>제품명 : <%= body.itemName %></h4>
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th class="text-center">처리 일시</th>
+                <th class="text-center">현재 위치</th>
+                <th class="text-center">상태</th>
+            </tr>
+            </thead>
+            <tbody>
+            <% for (let detail of body.trackingDetails){ %>
+                <tr>
+                    <td><%= detail.timeString %></td>
+                    <td><%= detail.where %></td>
+                    <td><%= detail.kind %></td>
+                </tr>
+            <% } %>
+            </tbody>
+        </table>
+    <% }else { %>
+        <%= JSON.stringify(body) %>
+    <% } %>
+
+</div>
+
+</body>

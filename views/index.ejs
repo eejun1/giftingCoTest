@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href="/stylesheets/style.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/css/bootstrap-theme.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.2/js/bootstrap.min.js"></script>
+</head>
+<body align="center">
+<div class="container">
+    <div class="jumbotron well">
+        <h2 class="text-center">택배 배송 조회 시스템</h2>
+        <form action="/list" method="post" id="list">
+            <label class="radio-inline">
+                <input type="radio" name="radioText" value="cj" required> CJ대한통운
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="radioText" value="hz"> 한진택배
+            </label>
+            <label class="radio-inline">
+                <input type="radio" name="radioText" value="kd"> 경동택배
+            </label>
+            <input style="margin-top: 20px" type="text" class="form-control" id="invoiceNumber" name="invoiceNumber"
+                   placeholder="송장번호"
+                   required>
+        </form>
+    </div>
+    <p class="text-center"><a class="btn btn-primary btn-lg" href="#" role="button"
+                              onclick="checklist()">조회</a></p>
+</div>
+</body>
+<script type="text/javascript">
+    function checklist() {
+        let isValidForm = document.forms['list'].checkValidity();
+        if (isValidForm) {
+            let invoice = $('input[name="radioText"]:checked').val();
+            let invoiceNumber = document.getElementById("invoiceNumber").value;
+            if(!$.isNumeric(invoiceNumber)){
+                alert("배송 정보에는 숫자만 입력하세요");
+                return false;
+            }
+            let checkResult = digitCheck(invoice, invoiceNumber.length);
+            if (checkResult === false){
+                alert("유효 자리수를 입력해 주세요 " +
+                    "cj,한진 : 10 혹은 12자리 경동 : 8 ~ 16 자리 ");
+                return false;
+            }
+            document.getElementById('list').submit();
+        } else {
+            alert("모든 정보를 입력해 주세요");
+            return false;
+        }
+    }
+
+    function digitCheck(invoice, invoiceNumber) {
+        let enable = false;
+        switch (invoice) {
+            case 'cj' :
+                if (Number(invoiceNumber) === 10 || Number(invoiceNumber) === 12)
+                    enable = true
+                break;
+            case 'hz' :
+                if (Number(invoiceNumber) === 10 || Number(invoiceNumber) === 12)
+                    enable = true
+                break;
+            case 'kd' :
+                if (Number(invoiceNumber) >= 8 && Number(invoiceNumber) <= 16)
+                    enable = true
+                break;
+        }
+        return enable;
+    }
+</script>
+</html>
